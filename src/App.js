@@ -2,15 +2,26 @@ import React, { Component } from 'react'
 import './App.css'
 import { CardList } from './components/card-list/card-list.component'
 import { SearchBox } from './components/search-box/search-box.component'
-import FLIGHT_DATA from './flights.data'
+
+import Axios from 'axios'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      flightData: FLIGHT_DATA,
+      flightData: [],
       searchFeild: ''
     }
+  }
+
+  componentDidMount() {
+    const getData = async () => {
+      const data = await Axios.get('http://localhost:5000/api/flight-data')
+      this.setState({
+        flightData: data.data
+      })
+    }
+    getData()
   }
  
 
